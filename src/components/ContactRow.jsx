@@ -1,14 +1,15 @@
 import React from 'react';
 
-// ContactRow component to render a single row of contact information
-const ContactRow = ({ contact }) => {
+export default function ContactRow({ setSelectedContactId, contact }) {
   return (
-    <tr>
+    <tr
+      onClick={() => {
+        setSelectedContactId(contact.id);
+      }}
+    >
       <td>{contact.name}</td>
       <td>{contact.email}</td>
       <td>{contact.phone}</td>
     </tr>
   );
-};
-
-export default ContactRow;
+}
