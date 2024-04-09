@@ -1,16 +1,38 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ContactRow from './ContactRow'; // Import ContactRow component
 
-// Dummy contact data
-const dummyContacts = [
-  { id: 1, name: "R2-D2", phone: "222-222-2222", email: "r2d2@droids.com" },
-  { id: 2, name: "C-3PO", phone: "333-333-3333", email: "c3po@droids.com" },
-  { id: 3, name: "BB-8", phone: "888-888-8888", email: "bb8@droids.com" },
-];
-
 const ContactList = () => {
-  // Set up contacts state using dummyContacts as default value
-  const [contacts, setContacts] = useState(dummyContacts);
+  // Set up contacts state with an empty array as the default value
+  const [contacts, setContacts] = useState([]);
+
+  // useEffect hook to fetch data when the component mounts
+  useEffect(() => {
+    // Define an async function to fetch the data
+    const fetchContacts = async () => {
+      try {
+        // Fetch data from the API
+        const response = await fetch("https://fsa-jsonplaceholder-69b5c48f1259.herokuapp.com/users");
+        
+        // Check if the response is successful
+        if (response.ok) {
+          // Parse the JSON response
+          const data = await response.json();
+          
+          // Update the contacts state with the fetched data
+          setContacts(data);
+        } else {
+          // Handle the error if the response is not successful
+          console.error("Failed to fetch contacts");
+        }
+      } catch (error) {
+        // Handle any errors that occur during fetching
+        console.error("Error fetching contacts:", error);
+      }
+    };
+
+    // Call the fetchContacts function when the component mounts
+    fetchContacts();
+  }, []); // Empty dependency array ensures this effect runs only once after component mount
 
   // Log out all the contacts
   console.log("Contacts: ", contacts);
@@ -31,10 +53,7 @@ const ContactList = () => {
       <tbody>
         {/* Map over contacts array and render ContactRow component for each contact */}
         {contacts.map(contact => (
-          <
-            ContactRow key={contact.id} contact={contact}
-             />
-
+          <ContactRow key={contact.id} contact={contact} />
         ))}
       </tbody>
     </table>
