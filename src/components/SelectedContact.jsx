@@ -33,6 +33,15 @@ export default function SelectedContact({ selectedContactId }) {
           <p><strong>Name:</strong> {contact.name}</p>
           <p><strong>Email:</strong> {contact.email}</p>
           <p><strong>Phone:</strong> {contact.phone}</p>
+          {contact.address && (
+            <div>
+              <p><strong>Address:</strong></p>
+              <p><strong>Street:</strong> {contact.address.street}</p>
+              <p><strong>Suite:</strong> {contact.address.suite}</p>
+              <p><strong>City:</strong> {contact.address.city}</p>
+              <p><strong>Zipcode:</strong> {contact.address.zipcode}</p>
+            </div>
+          )}
         </div>
       ) : (
         <p>Loading...</p>
